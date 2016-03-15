@@ -8,22 +8,23 @@ ASSIGNMENT ONE: FIX THESE BUTTON LISTENERS VIA CLOSURE
 
 assignments.one = function(){
 
-  //There's a problem with this function
   var buttons = $('button');
+  var buttonListener = function(i) {
+    $(buttons[i]).on('click', function() {
+       $('#clicked-btn').text('You clicked button #' + i);
+    });
+  };
 
-  // No matter what I click, it always picks the same element
-  // could it be CLOSURES???
   for (var i = 0; i < buttons.length; i++) {
-
-    // somehow, i is always the same value
-     $(buttons[i]).on('click', function() {
-        $('#clicked-btn').text('You clicked button #' + i);
-     });
+    buttonListener(i);
   }
 
+};
+/*
+  The issue with assignment 1 was that the listener was refering to the "i" variable from the encasing for-loop, and since "i" was defined in the for-loop the listener just pulls the last incremented value of "i".
 
-}
-
+  The solution was to encapsulate the listener in a function outside of the loop and then call it in the loop while passing it "i" so each call of the function creates it's own closure and therefore will have access to the "i" arugment its passed.
+*/
 
 
 /* ********************************************
@@ -42,11 +43,11 @@ assignments.two = function(){
 
                           //So what goes wrong here?
                           setTimeout( (function() {
-                            this.mood = "Happy!";
-
+                            //this.mood = "Happy!";
+                            viking.mood = "Happy!";
                             //THIS even runs correctly!
                             //What is UP with this? :(
-                            console.log("Cheered Up!")
+                            console.log("Cheered Up!");
                           }), 1000);
                       })
            };
@@ -64,7 +65,12 @@ assignments.two = function(){
 
 
 };
+/*
+This was simply a scoping issue.
+In line 46, "this.mood" was called within a different scope (i.e. the anynonymous function callback within the setTimeout method). "this" is different in this context.
 
+The solution was to explicitly refer to the object's variable reference.
+*/
 
 
 
@@ -78,6 +84,7 @@ assignments.two = function(){
 // Don't touch this. Just the setup
 
 $(document).ready(function(){
+
 
   assignments.one();
   assignments.two();
