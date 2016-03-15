@@ -41,10 +41,13 @@ assignments.two = function(){
                           this.mood = "sad.";
                           $('#mood').text(this.mood);
 
+                          var that = this;
+
                           //So what goes wrong here?
                           setTimeout( (function() {
                             //this.mood = "Happy!";
-                            viking.mood = "Happy!";
+                            //viking.mood = "Happy!";
+                            that.mood = "Happy!";
                             //THIS even runs correctly!
                             //What is UP with this? :(
                             console.log("Cheered Up!");
